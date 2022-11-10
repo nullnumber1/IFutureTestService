@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Long getAmount(Integer id) {
         Account account = accountRepository.findById(id).orElse(null);
         if (account == null) {
@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @CacheEvict(value = "accounts", key = "#id")
     public void addAmount(Integer id, Long value) {
         Account account = accountRepository.findById(id).orElse(null);
